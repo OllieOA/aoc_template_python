@@ -49,13 +49,12 @@ class Solver:
             raise FileNotFoundError("Could not find a suitable input!")
 
         data = DataLoader(target_file).load_data()
-        io_time = time.time()
 
         _LOG.info(f"| Part {part} | Solving |")
         result = solver(data)
         end_time = time.time()
         _LOG.info(
-            f"| Solved! Answer: {result} in {(end_time-io_time) * 1000: 0.3f} ms! ({io_time-start_time * 1000:0.3f} ms for io)"
+            f"| Solved! Answer: {result} in {(end_time-start_time) * 1000: 0.3f} ms!"
         )
 
     def solve(self):
