@@ -35,10 +35,10 @@ class Solver:
         start_time = time.time()
         _LOG.info(f"| Part {part} | File I/O |")
         if use_sample:
-            target_file = Path(self.my_base_path).parent / f"part{part}_sample.txt"
+            target_file = Path(self.my_base_path).parent / f"p{part}_sample.txt"
             alt_file = Path(self.my_base_path).parent / f"sample.txt"
         else:
-            target_file = Path(self.my_base_path).parent / f"part{part}_input.txt"
+            target_file = Path(self.my_base_path).parent / f"p{part}_input.txt"
             alt_file = Path(self.my_base_path).parent / f"input.txt"
 
         if not target_file.exists():
