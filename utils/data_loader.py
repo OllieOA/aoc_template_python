@@ -1,6 +1,5 @@
 # Example for relative common import
 
-from pathlib import Path
 from typing import List
 
 
@@ -12,5 +11,5 @@ class DataLoader:
         with open(self.file_path, "r") as f:
             lines = [x.strip("\n") for x in f.readlines()]
 
-        assert len(lines) > 0, "Did not load any data - check the file"
+        assert len(lines) > 0, f"Did not load any data from {self.file_path} - check the file"
         return lines

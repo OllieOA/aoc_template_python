@@ -4,8 +4,8 @@ from solver import Solver
 
 
 class DayX(Solver):
-    def __init__(self, day: int, use_sample: bool) -> None:
-        super().__init__(use_sample)
+    def __init__(self, day: int, use_sample: bool, run_each: List[bool]) -> None:
+        super().__init__(use_sample, run_each)
         self.my_base_path = __file__
         self.day = day
 
@@ -16,6 +16,6 @@ class DayX(Solver):
         pass
 
 
-def solve_day(day: int, use_sample: bool):
-    solver = DayX(day, use_sample)
+def solve_day(day: int, use_sample: bool, run_each: List[bool]):
+    solver = DayX(day, use_sample, run_each)
     solver.solve()
