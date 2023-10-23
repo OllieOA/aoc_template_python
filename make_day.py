@@ -18,18 +18,16 @@ def main():
 
     day_directory.mkdir()
     files_to_make = [
-        day_directory / "part1_sample.txt",
-        day_directory / "part1_input.txt",
-        day_directory / "part2_sample.txt",
-        day_directory / "part2_input.txt",
+        day_directory / "p1_sample.txt",
+        day_directory / "p1_input.txt",
+        day_directory / "p2_sample.txt",
+        day_directory / "p2_input.txt",
     ]
 
     for file in files_to_make:
         file.touch()
 
-    with open(TEMPLATE_SOLVER, "r") as f_in, open(
-        day_directory / "solve_day.py", "w"
-    ) as f_out:
+    with open(TEMPLATE_SOLVER, "r") as f_in, open(day_directory / "solve_day.py", "w") as f_out:
         template = f_in.read()
         template = template.replace("DayX", f"Day{day_num:02d}")
         f_out.write(template)
