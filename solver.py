@@ -20,11 +20,12 @@ _LOG.setLevel(logging.DEBUG)
 
 
 class Solver:
-    def __init__(self, use_sample: bool) -> None:
+    def __init__(self, use_sample: bool, run_each: List[bool]) -> None:
         self.use_sample = use_sample
         self.my_base_path = __file__
         self.day = -1
         self.logger = _LOG
+        self.run_part1, self.run_part2 = run_each
 
     def part1(self, data: List) -> None:
         raise NotImplementedError("Implement this method in a child class!")
@@ -54,8 +55,10 @@ class Solver:
 
     def solve(self):
         _LOG.info(f"| =------= DAY {self.day:02d} =------= |")
-        self._solve(self.part1, 1, self.use_sample)
-        self._solve(self.part2, 2, self.use_sample)
+        if self.run_part1:
+            self._solve(self.part1, 1, self.use_sample)
+        if self.run_part2:
+            self._solve(self.part2, 2, self.use_sample)
         _LOG.info(f"| =-----= COMPLETE =-----= |")
 
 
@@ -64,8 +67,16 @@ if __name__ == "__main__":
     args.add_argument("d", type=int, help="Day to run (integer)")
     args.add_argument("-s", action="store_true", help="Run with sample input")
     args.add_argument("-a", action="store_true", help="Run all days")
+    args.add_argument("-o1", action="store_true", help="Only run day 1")
+    args.add_argument("-o2", action="store_true", help="Only run day 2")
 
     opts = args.parse_args()
+    if opts.o1 and opts.o2:
+        _LOG.error("Don't specify both days to run!")
+    
+    run_each = [opts.o1, opts.o2]
+    if not any(run_each):
+        run_each = [True, True]
 
     if opts.a:
         days = range(1, 26)
@@ -74,7 +85,7 @@ if __name__ == "__main__":
 
     for day in days:
         try:
-            day_solver = importlib.import_module(f"day{day:02d}.solve_day")
-            day_solver.solve_day(day, opts.s)
+            day_solver = importlib.import_module(f"days.day{day:02d}.solve_day")
+            day_solver.solve_day(day, opts.s, run_each)
         except ImportError:
             _LOG.error(f"!!! DAY {day:02d} NOT IMPLEMENTED YET !!!")
