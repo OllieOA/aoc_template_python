@@ -7,9 +7,7 @@ from typing import List, Callable
 
 from utils.data_loader import DataLoader
 
-_LOG_FORMATTER = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
+_LOG_FORMATTER = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 _LOG = logging.getLogger(__name__)
 
 _LOG_STREAM_HANDLER = logging.StreamHandler()
@@ -43,19 +41,18 @@ class Solver:
             target_file = Path(self.my_base_path).parent / f"part{part}_input.txt"
             alt_file = Path(self.my_base_path).parent / f"input.txt"
 
-        if not target_file.exists() and alt_file.exists():
-            target_file = alt_file  # Used when the input does not change from part 1 to 2
-        else:
-            raise FileNotFoundError("Could not find a suitable input!")
+        if not target_file.exists():
+            if alt_file.exists():
+                target_file = alt_file  # Used when the input does not change from part 1 to 2
+            else:
+                raise FileNotFoundError("Could not find a suitable input!")
 
         data = DataLoader(target_file).load_data()
 
         _LOG.info(f"| Part {part} | Solving |")
         result = solver(data)
         end_time = time.time()
-        _LOG.info(
-            f"| Solved! Answer: {result} in {(end_time-start_time) * 1000: 0.3f} ms!"
-        )
+        _LOG.info(f"| Solved! Answer: {result} in {(end_time-start_time) * 1000: 0.3f} ms!")
 
     def solve(self):
         _LOG.info(f"| =------= DAY {self.day:02d} =------= |")
