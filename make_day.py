@@ -7,7 +7,6 @@ TEMPLATE_SOLVER = DAYS_DIRECTORY / "_template/solve_day.py"
 
 
 def main():
-    print(sys.argv)
     assert len(sys.argv) > 1, "You did not supply a day!"
     day = sys.argv[1]
     assert day.isdigit(), "You did not supply an integer!"
