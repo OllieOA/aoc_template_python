@@ -38,10 +38,15 @@ class Solver:
         _LOG.info(f"| Part {part} | File I/O |")
         if use_sample:
             target_file = Path(self.my_base_path).parent / f"part{part}_sample.txt"
+            alt_file = Path(self.my_base_path).parent / f"sample.txt"
         else:
             target_file = Path(self.my_base_path).parent / f"part{part}_input.txt"
+            alt_file = Path(self.my_base_path).parent / f"input.txt"
 
-        assert target_file.exists(), f"Could not find {target_file}!"
+        if not target_file.exists() and alt_file.exists():
+            target_file = alt_file  # Used when the input does not change from part 1 to 2
+        else:
+            raise FileNotFoundError("Could not find a suitable input!")
 
         data = DataLoader(target_file).load_data()
         io_time = time.time()
@@ -73,7 +78,7 @@ if __name__ == "__main__":
     opts = args.parse_args()
     if opts.o1 and opts.o2:
         _LOG.error("Don't specify both days to run!")
-    
+
     run_each = [opts.o1, opts.o2]
     if not any(run_each):
         run_each = [True, True]
