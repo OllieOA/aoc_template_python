@@ -131,4 +131,6 @@ dmypy.json
 .vscode
 
 # AoC rules
-*.txt
+*sample.txt
+*input.txt
+aoc22
